@@ -31,7 +31,18 @@ describe('demo routes', () => {
         url: 'https://pokeapi.co/api/v2/pokemon/1/',
       })
       .then((res) => {
-        console.log('resbody', res.body);
+        expect(res.body).toEqual({
+          id: '1',
+          pokeName: 'bulbasaur',
+          url: 'https://pokeapi.co/api/v2/pokemon/1/',
+        });
+      });
+  });
+
+  it('should get pokemon by id', () => {
+    return request(app)
+      .get('/api/v2/pokemon/1')
+      .then((res) => {
         expect(res.body).toEqual({
           id: '1',
           pokeName: 'bulbasaur',
