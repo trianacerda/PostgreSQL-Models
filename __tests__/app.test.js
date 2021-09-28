@@ -12,7 +12,7 @@ describe('demo routes', () => {
     pool.end();
   });
 
-  it('gets pokemon from api', () => {
+  it('should get the pokemon from api', () => {
     return request(app)
       .get('/api/v2/pokemon')
       .then((res) => {
@@ -23,7 +23,7 @@ describe('demo routes', () => {
       });
   });
 
-  it('post api pokemon to SQL table-- pokemon', () => {
+  it('should post api pokemon to SQL table-- pokemon', () => {
     return request(app)
       .post('/api/v2/pokemon')
       .send({
@@ -50,6 +50,25 @@ describe('demo routes', () => {
         expect(res.body).toEqual({
           id: '1',
           pokeName: 'bulbasaur',
+          url: 'https://pokeapi.co/api/v2/pokemon/1/',
+        });
+      });
+  });
+
+  it('should update/patch pokemon by id', async () => {
+    await request(app).post('/api/v2/pokemon').send({
+      name: 'bulbasaur',
+      url: 'https://pokeapi.co/api/v2/pokemon/1/',
+    });
+    await request(app).patch('/api/v2/pokemon/1').send({
+      pokeName: 'TRIANAasaur',
+    });
+    return request(app)
+      .get('/api/v2/pokemon/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '1',
+          pokeName: 'TRIANAasaur',
           url: 'https://pokeapi.co/api/v2/pokemon/1/',
         });
       });
