@@ -39,11 +39,15 @@ describe('demo routes', () => {
       });
   });
 
-  it('should get pokemon by id', () => {
+  it('should get pokemon by id', async () => {
+    await request(app).post('/api/v2/pokemon').send({
+      name: 'bulbasaur',
+      url: 'https://pokeapi.co/api/v2/pokemon/1/',
+    });
     return request(app)
       .get('/api/v2/pokemon/1')
       .then((res) => {
-        // console.log('res', res.body);
+        console.log('res', res.body);
         expect(res.body).toEqual({
           id: '1',
           pokeName: 'bulbasaur',
