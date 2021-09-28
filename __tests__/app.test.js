@@ -12,18 +12,7 @@ describe('demo routes', () => {
     pool.end();
   });
 
-  it('should get the pokemon from api', () => {
-    return request(app)
-      .get('/api/v2/pokemon')
-      .then((res) => {
-        expect(res.body).toEqual({
-          name: expect.any(String),
-          url: expect.any(String),
-        });
-      });
-  });
-
-  it('should post api pokemon to SQL table-- pokemon', () => {
+  it('should POST api pokemon to SQL table-- pokemon', () => {
     return request(app)
       .post('/api/v2/pokemon')
       .send({
@@ -39,7 +28,28 @@ describe('demo routes', () => {
       });
   });
 
-  it('should get pokemon by id', async () => {
+  it('should get all pokemon from SQL table', async () => {
+    await request(app).post('/api/v2/pokemon').send(
+      {
+        name: 'bulbasaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/1/',
+      },
+      {
+        name: 'ivysaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/2/',
+      }
+    );
+    return request(app)
+      .get('/api/v2/pokemon')
+      .then((res) => {
+        expect(res.body).toEqual({
+          name: expect.any(String),
+          url: expect.any(String),
+        });
+      });
+  });
+
+  it('should GET pokemon by ID', async () => {
     await request(app).post('/api/v2/pokemon').send({
       name: 'bulbasaur',
       url: 'https://pokeapi.co/api/v2/pokemon/1/',
@@ -55,7 +65,7 @@ describe('demo routes', () => {
       });
   });
 
-  it('should update/patch pokemon by id', async () => {
+  it('should PATCH pokemon by ID', async () => {
     await request(app).post('/api/v2/pokemon').send({
       name: 'bulbasaur',
       url: 'https://pokeapi.co/api/v2/pokemon/1/',
@@ -74,7 +84,7 @@ describe('demo routes', () => {
       });
   });
 
-  it('should DELETE a pokemon by id', async () => {
+  it('should DELETE a pokemon by ID', async () => {
     await request(app).post('/api/v2/pokemon').send({
       name: 'bulbasaur',
       url: 'https://pokeapi.co/api/v2/pokemon/1/',
