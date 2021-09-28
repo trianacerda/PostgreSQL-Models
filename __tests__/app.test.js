@@ -73,4 +73,16 @@ describe('demo routes', () => {
         });
       });
   });
+
+  it('should DELETE a pokemon by id', async () => {
+    await request(app).post('/api/v2/pokemon').send({
+      name: 'bulbasaur',
+      url: 'https://pokeapi.co/api/v2/pokemon/1/',
+    });
+    return request(app)
+      .delete('/api/v2/pokemon/1')
+      .then((res) => {
+        expect(res.body).toEqual({});
+      });
+  });
 });
