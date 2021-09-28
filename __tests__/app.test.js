@@ -16,11 +16,25 @@ describe('demo routes', () => {
     return request(app)
       .get('/api/v2/pokemon')
       .then((res) => {
-        console.log('res.body', res.body);
         expect(res.body).toEqual({
-          // id: expect.any(String),
           name: expect.any(String),
           url: expect.any(String),
+        });
+      });
+  });
+
+  it('post api pokemon to SQL table-- pokemon', () => {
+    return request(app)
+      .post('/api/v2/pokemon')
+      .send({
+        name: 'bulbasaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/1/',
+      })
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '1',
+          name: 'bulbasaur',
+          url: 'https://pokeapi.co/api/v2/pokemon/1/',
         });
       });
   });
