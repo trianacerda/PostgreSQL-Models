@@ -14,12 +14,12 @@ describe('demo routes', () => {
 
   it('gets pokemon from api', () => {
     return request(app)
-      .get('/')
+      .get('/api/v2/pokemon')
       .then((res) => {
         console.log('res.body', res.body);
         expect(res.body).toEqual({
-          id: expect.any(String),
-          pokeName: expect.any(String),
+          // id: expect.any(String),
+          name: expect.any(String),
           url: expect.any(String),
         });
       });
