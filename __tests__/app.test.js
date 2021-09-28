@@ -47,7 +47,6 @@ describe('demo routes', () => {
     return request(app)
       .get('/api/v2/pokemon/1')
       .then((res) => {
-        console.log('res', res.body);
         expect(res.body).toEqual({
           id: '1',
           pokeName: 'bulbasaur',
