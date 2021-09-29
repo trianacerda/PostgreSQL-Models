@@ -28,24 +28,21 @@ describe('demo routes', () => {
       });
   });
 
-  it('should get all pokemon from SQL table', async () => {
-    await request(app).post('/api/v2/pokemon').send(
-      {
-        name: 'bulbasaur',
-        url: 'https://pokeapi.co/api/v2/pokemon/1/',
-      },
-      {
-        name: 'ivysaur',
-        url: 'https://pokeapi.co/api/v2/pokemon/2/',
-      }
-    );
+  it.only('should GET ALL pokemon from SQL table', async () => {
+    await request(app).post('/api/v2/pokemon').send();
     return request(app)
       .get('/api/v2/pokemon')
       .then((res) => {
-        expect(res.body).toEqual({
-          name: expect.any(String),
-          url: expect.any(String),
-        });
+        console.log('!!!!!', res.body);
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(String),
+              name: expect.any(String),
+              url: expect.any(String),
+            }),
+          ])
+        );
       });
   });
 
