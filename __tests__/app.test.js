@@ -33,16 +33,9 @@ describe('demo routes', () => {
     return request(app)
       .get('/api/v2/pokemon')
       .then((res) => {
-        console.log('!!!!!', res.body);
-        expect(res.body).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              id: expect.any(String),
-              name: expect.any(String),
-              url: expect.any(String),
-            }),
-          ])
-        );
+        // console.log('!!!!!', res.body);
+        expect(res.body).toEqual(expect.any(Array));
+        expect(res.body.length).toEqual(20);
       });
   });
 
